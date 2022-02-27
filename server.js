@@ -2,7 +2,6 @@ import { engine } from "express-handlebars";
 import express from "express";
 import mysql from "mysql";
 import "dotenv/config";
-import bodyParser from "body-parser";
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -30,6 +29,21 @@ let connection = mysql.createConnection({
 
 app.get("/", (req, res) => {
   res.render("home");
+});
+app.get("/about", (req, res) => {
+  res.render("about");
+});
+app.get("/mission", (req, res) => {
+  res.render("mission");
+});
+app.get("/articles", (req, res) => {
+  res.render("articles");
+});
+app.get("/projets", (req, res) => {
+  res.render("projets");
+});
+app.get("/contact", (req, res) => {
+  res.render("contact");
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

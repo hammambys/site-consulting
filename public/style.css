@@ -136,6 +136,7 @@ h6 {
 #header {
   background: transparent;
 }
+
 .sticky-wrapper {
   position: absolute;
   width: 100%;
@@ -346,16 +347,15 @@ h6 {
 .nav-menu ul li {
   min-width: 180px;
 }
-.nav-menu ul li .btn-banner{
+.nav-menu ul li .btn-banner {
   background: var(--primary);
   border: 2px solid var(--primary);
   border-radius: 30px;
 }
-.nav-menu ul li .btn-banner:hover{
+.nav-menu ul li .btn-banner:hover {
   background: none;
   color: var(--primary);
 }
-
 
 /* Nav Menu Arrows */
 .sf-arrows .sf-with-ul {
@@ -567,8 +567,7 @@ Inner Banner
   font-size: 38px;
   text-align: center;
 }
-.svgImg {
-}
+
 .svgImg img {
   width: 120px;
 }
@@ -899,7 +898,7 @@ Inner Banner
   font-size: 18px;
   font-weight: bold;
   margin: 10px 0 5px 0;
-  color: var(--fourth;
+  color: var(--fourth);
 }
 
 #testimonials .testimonial-item h4 {
@@ -978,13 +977,13 @@ p.help-block li {
 }
 
 #call-to-action .cta-title {
-  color: var(--secondary);
+  color: var(--fourth);
   font-size: 28px;
   font-weight: 700;
 }
 
 #call-to-action .cta-text {
-  color: var(--secondary);
+  color: var(--fourth);
 }
 
 @media (min-width: 769px) {
@@ -1005,14 +1004,14 @@ p.help-block li {
   border-radius: 3px;
   transition: 0.5s;
   margin: 10px;
-  border: 3px solid var(--secondary);
-  color: var(--secondary);
+  border: 3px solid var(--fourth);
+  color: var(--fourth);
 }
 
 #call-to-action .cta-btn:hover {
-  background: var(--secondary) fff;
-  border: 3px solid var(--secondary) fff;
-  color: #00a3d1;
+  background: var(--secondary);
+  border: 3px solid var(--primary);
+  color: var(--primary);
 }
 
 /* Our Team Section
@@ -1104,7 +1103,7 @@ p.help-block li {
 #contact .contact-info address,
 #contact .contact-info p {
   margin-bottom: 0;
-  color: #000;
+  color: var(--fourth);
   display: block;
   float: left;
   width: 100%;
@@ -1120,13 +1119,13 @@ p.help-block li {
   margin-bottom: 15px;
   font-weight: bold;
   text-transform: uppercase;
-  color: #1c4450;
+  color: var(--primary);
   float: left;
   margin: 8px 15px;
 }
 
 #contact .contact-info a {
-  color: #000;
+  color: var(--fourth);
 }
 
 #contact .contact-info a:hover {
@@ -1149,8 +1148,6 @@ p.help-block li {
 }
 
 @media (min-width: 768px) {
-  #contact .contact-phone {
-  }
 }
 
 #contact #google-map {
