@@ -1,5 +1,11 @@
 import express from "express";
+
+// These lines make "require" available
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+
 var router = express.Router();
+var userController = require("../controllers/userController.cjs");
 
 router.get("/", (req, res) => {
   res.render("home");
@@ -19,5 +25,12 @@ router.get("/projets", (req, res) => {
 router.get("/contact", (req, res) => {
   res.render("contact");
 });
+router.get("/login", (req, res) => {
+  res.render("login");
+});
+
+router.post("/auth", userController.login);
+
+router.get("/admin", userController.viewAll);
 
 export default router;
