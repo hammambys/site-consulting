@@ -28,8 +28,13 @@ router.get("/contact", (req, res) => {
 router.get("/login", (req, res) => {
   res.render("login");
 });
+router.get("/register", (req, res) => {
+  res.render("register");
+});
 
 router.post("/auth", userController.login);
+// user registration
+router.post("/post-register", userController.register);
 
 router.get("/admin", userController.viewAll);
 
