@@ -27,23 +27,7 @@ let connection = mysql.createConnection({
   database: process.env.DB_NAME,
 });
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
-app.get("/about", (req, res) => {
-  res.render("about");
-});
-app.get("/mission", (req, res) => {
-  res.render("mission");
-});
-app.get("/articles", (req, res) => {
-  res.render("articles");
-});
-app.get("/projets", (req, res) => {
-  res.render("projets");
-});
-app.get("/contact", (req, res) => {
-  res.render("contact");
-});
+import router from "./routes/index.js";
+app.use("/", router);
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
