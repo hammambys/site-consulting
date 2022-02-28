@@ -26,7 +26,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Templating Engine
-app.engine("handlebars", engine({ partialsDir: "./views/partials/" }));
+app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", "./views");
 

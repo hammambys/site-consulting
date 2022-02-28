@@ -1,22 +1,7 @@
 
 <section id="innerBanner"></section>
 <main id="main">
-  <div class="admin-dashboard">
-    <div class="sidebar">
- <ul>
-   <a href="/rdv">
-<li>
-Rendez-vous
-   </li>
-   </a>
-   <a href="/clients"><li>
-     Clients
-   </li></a>
-   
-   
- </ul>
-  </div>
- <table class="table table-bordered">
+  <table class="table table-bordered">
   <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
@@ -30,8 +15,8 @@ Rendez-vous
   </thead>
   <tbody>
     {{#each rows}}
-
     <tr>
+
       <th scope="row">{{this.id}}</th>
       <td>{{this.first_name}}</td>
       <td>{{this.last_name}}</td>
@@ -47,7 +32,6 @@ Rendez-vous
     {{/each}}
   </tbody>
 </table>
-  </div>
   
 
  
