@@ -1,4 +1,5 @@
 const mysql = require("mysql");
+const { validationResult } = require("express-validator");
 
 let connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -13,7 +14,7 @@ exports.viewAll = (req, res) => {
   connection.query("SELECT * FROM users", (err, rows) => {
     // When done with the connection, release it
     if (!err) {
-      res.render("admin", { rows });
+      res.render("clients", { rows });
     } else {
       console.log(err);
     }
@@ -39,7 +40,7 @@ exports.login = (req, res) => {
           req.session.loggedin = true;
           req.session.username = username;
           // Redirect to home page
-          res.redirect("/admin");
+          res.redirect("/clients");
         } else {
           res.send("Incorrect Username and/or Password!");
         }
@@ -52,56 +53,28 @@ exports.login = (req, res) => {
   }
 };
 
-exports.register = (req, res, next) => {
-  req.assert("name", "Name is required").notEmpty(); //Validate name
-  req.assert("password", "Password is required").notEmpty(); //Validate password
-  req.assert("email", "A valid email is required").isEmail(); //Validate email
+exports.register = (req, res) => {
+  console.log(req.body);
+  var user = {
+    first_name: req.body.fname,
+    last_name: req.body.lname,
+    username: req.body.username,
+    email: req.body.email,
+    password: req.body.password,
+  };
 
-  var errors = req.validationErrors();
-
-  if (!errors) {
-    //No errors were found.  Passed Validation!
-
-    var user = {
-      name: req.sanitize("name").escape().trim(),
-      email: req.sanitize("email").escape().trim(),
-      password: req.sanitize("password").escape().trim(),
-    };
-
-    connection.query("INSERT INTO users SET ?", user, function (err, result) {
-      //if(err) throw err
-      if (err) {
-        req.flash("error", err);
-
-        // render to views/user/add.ejs
-        res.render("auth/register", {
-          title: "Registration Page",
-          name: "",
-          password: "",
-          email: "",
-        });
-      } else {
-        req.flash("success", "You have successfully signup!");
-        res.redirect("/login");
-      }
-    });
-  } else {
-    //Display errors to user
-    var error_msg = "";
-    errors.forEach(function (error) {
-      error_msg += error.msg + "<br>";
-    });
-    req.flash("error", error_msg);
-
-    /**
-     * Using req.body.name
-     * because req.param('name') is deprecated
-     */
-    res.render("auth/register", {
-      title: "Registration Page",
-      name: req.body.name,
-      email: req.body.email,
-      password: "",
-    });
-  }
+  connection.query("INSERT INTO users SET ?", user, function (err, result) {
+    if (err) {
+      console.log(err);
+      res.render("register", {
+        title: "Registration Page",
+        name: "",
+        password: "",
+        email: "",
+      });
+    } else {
+      console.log("success", "You have successfully signup!");
+      res.redirect("/login");
+    }
+  });
 };

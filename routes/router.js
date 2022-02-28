@@ -1,4 +1,5 @@
 import express from "express";
+import validator from "../controllers/validator.cjs";
 
 // These lines make "require" available
 import { createRequire } from "module";
@@ -31,11 +32,18 @@ router.get("/login", (req, res) => {
 router.get("/register", (req, res) => {
   res.render("register");
 });
+router.get("/rdv", (req, res) => {
+  res.render("rdv");
+});
+router.get("/clients", (req, res) => {
+  res.render("clients");
+});
 
 router.post("/auth", userController.login);
-// user registration
-router.post("/post-register", userController.register);
 
-router.get("/admin", userController.viewAll);
+// user registration
+router.post("/post-register", validator.createUser, userController.register);
+
+router.get("/clients", userController.viewAll);
 
 export default router;

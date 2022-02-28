@@ -1,6 +1,5 @@
 import { engine } from "express-handlebars";
 import express from "express";
-import mysql from "mysql";
 import "dotenv/config";
 import router from "./routes/router.js";
 import session from "express-session";
@@ -27,7 +26,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Templating Engine
-app.engine("handlebars", engine());
+app.engine("handlebars", engine({ partialsDir: "./views/partials/" }));
 app.set("view engine", "handlebars");
 app.set("views", "./views");
 
