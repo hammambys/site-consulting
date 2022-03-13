@@ -1,1 +1,14 @@
-<h1>Articles</h1>
+  <section id="innerBanner"> 
+    
+  </section>
+
+  <main id="main">
+      {{#each rows}}
+    <article>
+        <p>{{article_id}} </p>
+        <h1> {{article_title}} </h1>
+        <p> {{article_content}} </p>
+    </article>
+    {{/each}}
+
+  </main>

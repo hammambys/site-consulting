@@ -1,5 +1,6 @@
+const moment = require("moment");
 const mysql = require("mysql");
-const { validationResult } = require("express-validator");
+const permalink = require("permalinks");
 
 let connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -20,26 +21,52 @@ exports.viewAll = (req, res) => {
     }
   });
 };
+exports.viewClient = (req, res) => {
+  connection.query(
+    "SELECT * from users WHERE user_id=?",
+    [req.params.id],
+    (err, rows) => {
+      if (!err) {
+        res.render("viewclient", {
+          data: rows,
+        });
+      } else {
+        console.log(err);
+      }
+    }
+  );
+};
+
+exports.viewAllRdv = (req, res) => {
+  // User the connection
+  connection.query("SELECT * FROM appointments", (err, rows) => {
+    rows.date = moment(rows.date).format("dddd");
+    // When done with the connection, release it
+    if (!err) {
+      res.render("rdv", { rows });
+    } else {
+      console.log(err);
+    }
+  });
+};
 
 exports.login = (req, res) => {
   // Capture the input fields
-  let username = req.body.username;
+  let email = req.body.email;
   let password = req.body.password;
   // Ensure the input fields exists and are not empty
-  if (username && password) {
+  if (email && password) {
     // Execute SQL query that'll select the account from the database based on the specified username and password
     connection.query(
-      "SELECT * FROM users WHERE username = ? AND password = ?",
-      [username, password],
+      "SELECT * FROM users WHERE email = ? AND password = ?",
+      [email, password],
       function (error, results, fields) {
-        // If there is an issue with the query, output the error
         if (error) throw error;
         // If the account exists
         if (results.length > 0) {
           // Authenticate the user
           req.session.loggedin = true;
-          req.session.username = username;
-          // Redirect to home page
+          req.session.email = email;
           res.redirect("/clients");
         } else {
           res.send("Incorrect Username and/or Password!");
@@ -48,7 +75,7 @@ exports.login = (req, res) => {
       }
     );
   } else {
-    res.send("Please enter Username and Password!");
+    res.send("Please enter Email and Password!");
     res.end();
   }
 };

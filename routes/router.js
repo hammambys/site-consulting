@@ -7,6 +7,7 @@ const require = createRequire(import.meta.url);
 
 var router = express.Router();
 var userController = require("../controllers/userController.cjs");
+var articleController = require("../controllers/articleController.cjs");
 
 router.get("/", (req, res) => {
   res.render("home");
@@ -17,9 +18,11 @@ router.get("/about", (req, res) => {
 router.get("/mission", (req, res) => {
   res.render("mission");
 });
-router.get("/articles", (req, res) => {
-  res.render("articles");
-});
+
+router.get("/articles", articleController.viewAllArticles);
+router.get("/addarticle", articleController.form);
+router.post("/addarticle", articleController.createArticle);
+
 router.get("/projets", (req, res) => {
   res.render("projets");
 });
@@ -32,18 +35,18 @@ router.get("/login", (req, res) => {
 router.get("/register", (req, res) => {
   res.render("register");
 });
-router.get("/rdv", (req, res) => {
-  res.render("rdv");
+router.get("/rdv", userController.viewAllRdv);
+
+router.get("/clients", userController.viewAll);
+router.get("/viewclient", (req, res) => {
+  res.render("viewclient");
 });
-router.get("/clients", (req, res) => {
-  res.render("clients");
-});
+
+router.get("/viewclient/:id", userController.viewClient);
 
 router.post("/auth", userController.login);
 
 // user registration
 router.post("/post-register", validator.createUser, userController.register);
-
-router.get("/clients", userController.viewAll);
 
 export default router;

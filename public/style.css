@@ -1308,3 +1308,7 @@ p.help-block li {
 .admin-dashboard {
   display: flex;
 }
+.sidebar ul a {
+  color: var(--fourth);
+  list-style-type: none;
+}

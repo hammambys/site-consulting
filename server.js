@@ -2,19 +2,9 @@ import { engine } from "express-handlebars";
 import express from "express";
 import "dotenv/config";
 import router from "./routes/router.js";
-import session from "express-session";
 
 const port = process.env.PORT || 5000;
 const app = express();
-
-// create a seesion
-app.use(
-  session({
-    secret: "secret",
-    resave: true,
-    saveUninitialized: true,
-  })
-);
 
 // Parse application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));

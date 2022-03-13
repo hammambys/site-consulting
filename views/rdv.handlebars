@@ -16,12 +16,14 @@ Rendez-vous
  </ul>
   </div>
   <div class="main-content">
-<div class="rdv-container card">
+<div class="rdv-container">
+  {{#each rows}}
+
     <div class="rdv">
-        <h2>rdv title</h2>
-        <h3>rdv date</h3>
-        <p>username</p>
+        <h2>{{this.rdv_id}}</h2>
+        <h3>{{this.date}}</h3>
     </div>
+    {{/each}}
 
 </div>
   </div>
