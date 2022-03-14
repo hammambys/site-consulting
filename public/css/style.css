@@ -1224,10 +1224,10 @@ p.help-block li {
 # Footer
 --------------------------------------------------------------*/
 #footer {
-  background: #fff;
+  background: var(--third);
   padding: 0 0 30px 0;
   font-size: 14px;
-  color: var(--secondary);
+  color: var(--fourth);
 }
 
 #footer .copyright {
@@ -1308,7 +1308,10 @@ p.help-block li {
 .admin-dashboard {
   display: flex;
 }
-.sidebar ul a {
+.main-admin-dashboard {
+  padding: 20px;
+}
+.list-group a {
   color: var(--fourth);
-  list-style-type: none;
+  background-color: transparent;
 }

@@ -1,0 +1,21 @@
+<section id="innerBanner"></section>
+<main id="main">
+  <div class="container admin-dashboard">
+    {{>sidebar}}
+
+    <div class="main-admin-dashboard">
+      <div class="rdv-container">
+        {{#each rows}}
+
+        <div class="rdv">
+          <h2>{{this.rdv_id}}</h2>
+          <h3>{{this.date}}</h3>
+        </div>
+        {{/each}}
+
+      </div>
+    </div>
+  </div>
+
+
+</main>
