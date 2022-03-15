@@ -1,9 +1,11 @@
 import { engine } from "express-handlebars";
 import express from "express";
 import "dotenv/config";
-import router from "./routes/router.js";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+import router from "./routes/router.js";
+import adminRouter from "./routes/adminRouter.js";
+import clientRouter from "./routes/clientRouter.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -28,6 +30,9 @@ app.engine("hbs", engine());
 app.set("view engine", "hbs");
 app.set("views", "./views");
 
+// Routes
 app.use("/", router);
+app.use("/admin", adminRouter);
+app.use("/client", clientRouter);
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

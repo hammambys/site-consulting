@@ -1,0 +1,58 @@
+<section id="innerBanner"></section>
+<main id="main">
+  <div class="container dashboard">
+    {{>admin-sidebar}}
+    <div class="main-admin-dashboard">
+      {{#if alert}}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{alert}}
+      </div>
+      {{/if}}
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each rows}}
+          <tr>
+            <th scope="row">{{this.user_id}}</th>
+            <td>{{this.first_name}}</td>
+            <td>{{this.last_name}}</td>
+            <td>{{this.username}}</td>
+            <td>{{this.email}}</td>
+            {{#if this.isActive}}
+            <td>Active</td>
+            {{else}}
+            <td>Inactive</td>
+            {{/if}}
+            <form action="/admin/clients/{{this.user_id}}" method="post">
+              <td class="text-end">
+                <a href="/admin/viewclient/{{this.user_id}}" type="button" class="btn btn-light btn-small"><i
+                    class="bi bi-eye"></i> Voir</a>
+                <a href="/admin/editclient/{{this.user_id}}" type="button" class="btn btn-light btn-small"><i
+                    class="bi bi-pencil"></i>
+                  Editer</a>
+                {{#if this.isActive}}
+                <input class="btn btn-primary" type="submit" value="Désactiver"></input>
+                {{else}}
+                <input class="btn btn-primary" type="submit" value="Activer"></input>
+                {{/if}}
+              </td>
+            </form>
+
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</main>

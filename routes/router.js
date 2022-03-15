@@ -1,9 +1,9 @@
-import express from "express";
-import validator from "../controllers/validator.cjs";
-
 // These lines make "require" available
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
+
+import express from "express";
+import validator from "../controllers/validator.cjs";
 
 var router = express.Router();
 var userController = require("../controllers/userController.cjs");
@@ -35,17 +35,8 @@ router.get("/login", (req, res) => {
 router.get("/register", (req, res) => {
   res.render("register");
 });
-router.get("/rdv", userController.viewAllRdv);
-
-router.get("/clients", userController.viewAll);
-router.get("/viewclient", (req, res) => {
-  res.render("viewclient");
-});
-
-router.get("/viewclient/:id", userController.viewClient);
 
 router.post("/auth", userController.login);
-
 // user registration
 router.post("/post-register", validator.createUser, userController.register);
 

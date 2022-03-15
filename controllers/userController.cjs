@@ -1,6 +1,4 @@
-const moment = require("moment");
 const mysql = require("mysql");
-const permalink = require("permalinks");
 
 let connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -9,13 +7,10 @@ let connection = mysql.createConnection({
   database: process.env.DB_NAME,
 });
 
-// View Users
 exports.viewAll = (req, res) => {
-  // User the connection
   connection.query("SELECT * FROM users", (err, rows) => {
-    // When done with the connection, release it
     if (!err) {
-      res.render("clients", { rows });
+      res.render("admin-view-clients", { rows });
     } else {
       console.log(err);
     }
@@ -27,7 +22,7 @@ exports.viewClient = (req, res) => {
     [req.params.id],
     (err, rows) => {
       if (!err) {
-        res.render("viewclient", {
+        res.render("view-client", {
           data: rows,
         });
       } else {
@@ -37,17 +32,103 @@ exports.viewClient = (req, res) => {
   );
 };
 
-exports.viewAllRdv = (req, res) => {
-  // User the connection
-  connection.query("SELECT * FROM appointments", (err, rows) => {
-    rows.date = moment(rows.date).format("dddd");
-    // When done with the connection, release it
-    if (!err) {
-      res.render("rdv", { rows });
-    } else {
-      console.log(err);
+exports.editClient = (req, res) => {
+  connection.query(
+    "SELECT * FROM users WHERE user_id=?",
+    [req.params.id],
+    (err, rows) => {
+      if (!err) {
+        res.render("edit-client", { rows });
+      } else {
+        console.log(err);
+      }
     }
-  });
+  );
+};
+
+exports.updateClient = (req, res) => {
+  const { first_name, last_name, username } = req.body;
+  connection.query(
+    "UPDATE users SET first_name=? ,last_name=?,username=? WHERE user_id=?",
+    [first_name, last_name, username, req.params.id],
+    (err, rows) => {
+      if (!err) {
+        connection.query(
+          "SELECT * FROM users WHERE user_id = ?",
+          [req.params.id],
+          (err, rows) => {
+            if (!err) {
+              res.render("edit-client", {
+                rows,
+                alert: `${username} est mis à jour.`,
+              });
+            } else {
+              console.log(err);
+            }
+          }
+        );
+      } else {
+        console.log(err);
+      }
+    }
+  );
+};
+
+exports.deleteClient = (req, res) => {
+  connection.query(
+    "select isActive from users where user_id=?",
+    [req.params.id],
+    (err, rows) => {
+      if (!err) {
+        if (!rows[0].isActive) {
+          connection.query(
+            "UPDATE users SET isActive=true WHERE user_id = ?",
+            [req.params.id],
+            (err, rows) => {
+              if (!err) {
+                connection.query("SELECT * FROM users", (err, rows) => {
+                  if (!err) {
+                    res.render("admin-view-clients", {
+                      rows,
+                      alert: "utilisateur activé avec succés",
+                    });
+                  } else {
+                    console.log(err);
+                  }
+                });
+              } else {
+                console.log(err);
+              }
+            }
+          );
+        } else {
+          connection.query(
+            "UPDATE  users SET isActive=false WHERE user_id = ?",
+            [req.params.id],
+            (err, rows) => {
+              if (!err) {
+                connection.query("SELECT * FROM users", (err, rows) => {
+                  if (!err) {
+                    res.render("admin-view-clients", {
+                      rows,
+                      alert: "utilisateur désactivé avec succés",
+                    });
+                  } else {
+                    console.log(err);
+                  }
+                });
+              } else {
+                console.log(err);
+              }
+            }
+          );
+        }
+      } else {
+        console.log(err);
+      }
+    }
+  );
+  const { isActive } = req.body;
 };
 
 exports.login = (req, res) => {
@@ -81,7 +162,6 @@ exports.login = (req, res) => {
 };
 
 exports.register = (req, res) => {
-  console.log(req.body);
   var user = {
     first_name: req.body.fname,
     last_name: req.body.lname,

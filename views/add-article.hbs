@@ -2,13 +2,13 @@
 
 </section>
 <main id="main">
-  <div class="container admin-dashboard">
-    {{>sidebar}}
+  <div class="container dashboard">
+    {{>admin-sidebar}}
     <div class="main-admin-dashboard">
       {{#if alert}}
       <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{alert}}
-        <a href="/clients">Retour</a>
+        <a href="/articles" class="btn">Voir les articles</a>
       </div>
       {{/if}}
       <form class="row g-3 needs-validation" method="POST" action="/addarticle" novalidate>

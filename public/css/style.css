@@ -1305,7 +1305,7 @@ p.help-block li {
   transition: background-color 0.2s;
 }
 
-.admin-dashboard {
+.dashboard {
   display: flex;
 }
 .main-admin-dashboard {
@@ -1313,5 +1313,5 @@ p.help-block li {
 }
 .list-group a {
   color: var(--fourth);
-  background-color: transparent;
+  background-color: var(--third);
 }

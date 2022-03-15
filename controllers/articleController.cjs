@@ -8,17 +8,13 @@ let connection = mysql.createConnection({
 });
 
 exports.viewAllArticles = (req, res) => {
-  connection.query(
-    "SELECT * FROM articles  ",
-
-    (err, rows) => {
-      if (!err) {
-        res.render("articles", { rows });
-      } else {
-        console.log(err);
-      }
+  connection.query("SELECT * FROM articles", (err, rows) => {
+    if (!err) {
+      res.render("articles", { rows });
+    } else {
+      console.log(err);
     }
-  );
+  });
 };
 
 exports.createArticle = (req, res) => {
@@ -29,12 +25,11 @@ exports.createArticle = (req, res) => {
     (err, rows) => {
       if (!err) {
         res.render("add-article", {
-          alert: "article added successfully.",
+          alert: "L'article est crée avec succés!.",
         });
       } else {
         console.log(err);
       }
-      console.log("The data from user table: \n", rows);
     }
   );
 };
