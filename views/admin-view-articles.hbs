@@ -1,0 +1,51 @@
+<section id="innerBanner"></section>
+<main id="main">
+  <div class="container-sm dashboard">
+    {{>admin-sidebar}}
+    <div class="container">
+      {{#if alert}}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{alert}}
+      </div>
+      {{/if}}
+      <div>
+        <a href="/admin/addarticle" type="button" class="btn btn-light btn-small">Créer un article</a>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered  table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th>#</th>
+              <th>Titre</th>
+              <th>Gérer article</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each rows}}
+            <tr>
+              <th scope="row">{{this.article_id}}</th>
+              <td>{{this.article_title}}</td>
+              <td class="text-end d-flex">
+                <div class="mr-2"><a href="/admin/articles/{{this.article_id}}" type="button" class="btn btn-primary">
+                    Voir</a></div>
+                <div class="mr-2"><a href="/admin/editarticle/{{this.article_id}}" type="button"
+                    class="btn btn-light btn-small">
+                    Editer</a></div>
+                <div class="mr-2">
+                  <form action="/admin/articles/delete/{{this.article_id}}">
+                    <input class="btn btn-danger" type="submit" value="Supprimer"></input>
+                  </form>
+                </div>
+
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+</main>

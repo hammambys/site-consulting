@@ -1,18 +1,20 @@
 <div class="col-6">
   <div class="form-floating mb-3">
-    <label for="articleTitle">Article Title</label>
-    <input type="text" class="form-control" id="articleTitle" value="{{this.article_title}}" placeholder="Article Title"
+    <label for="articleTitle">Titre</label>
+    <input type="text" class="form-control" id="articleTitle" value="{{this.article_title}}" placeholder="Titre"
       name="article_title">
-
   </div>
 </div>
 <div class="col-6">
   <div class="form-floating mb-3">
-    <label for="articleContent">Article Content</label>
-    <textarea name="article_content" id="articleContent" value="{{this.article_content}}" placeholder="Article Content"
-      cols="60" rows="10"></textarea>
-
+    <label for="articleContent">Contenu</label>
+    <textarea name="article_content" id="articleContent" value="{{this.article_content}}" placeholder="Contenu"
+      cols="120" rows="10"></textarea>
   </div>
+</div>
+<div class="col-6">
+  <label for="avatar">Choisir une image pour l'article:</label>
+  <input type="file" id="article_img" name="article_img" accept="image/png, image/jpeg">
 </div>
 
 <div class="col-12 d-grid">

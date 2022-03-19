@@ -1083,9 +1083,6 @@ p.help-block li {
 
 /* Contact Section
 --------------------------------*/
-#contact {
-  padding: 60px 0;
-}
 
 #contact .contact-info {
   margin-bottom: 20px;
@@ -1255,13 +1252,13 @@ p.help-block li {
 
 .form {
   width: 400px;
-  background-color: #ffffff;
+  background-color: var(--third);
   box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
   margin: 100px auto;
 }
 .form h1 {
   text-align: center;
-  color: #5b6574;
+  color: var(--fourth);
   font-size: 24px;
   padding: 20px 0 20px 0;
   border-bottom: 1px solid #dee0e4;
@@ -1307,10 +1304,10 @@ p.help-block li {
 
 .dashboard {
   display: flex;
+  height: 100%;
+  min-height: 30rem;
 }
-.main-admin-dashboard {
-  padding: 20px;
-}
+
 .list-group a {
   color: var(--fourth);
   background-color: var(--third);

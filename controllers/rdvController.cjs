@@ -11,7 +11,12 @@ exports.viewAllRdv = (req, res) => {
   // User the connection
   connection.query("SELECT * FROM rendezvous", (err, rows) => {
     if (!err) {
-      res.render("admin-view-rdv", { rows });
+      res.render("admin-view-rdv", {
+        rows,
+        isAdmin: req.session.isAdmin,
+        loggedin: req.session.loggedin,
+        username: req.session.username,
+      });
     } else {
       console.log(err);
     }
@@ -20,10 +25,15 @@ exports.viewAllRdv = (req, res) => {
 exports.viewAllRdvOfClient = (req, res) => {
   connection.query(
     "SELECT * FROM rendezvous WHERE user_id=?",
-    [req.params.id],
+    [req.session.user_id],
     (err, rows) => {
       if (!err) {
-        res.render("client-view-rdv", { rows });
+        res.render("client-view-rdv", {
+          rows,
+          user_id: req.session.user_id,
+          loggedin: req.session.loggedin,
+          username: req.session.username,
+        });
       } else {
         console.log(err);
       }
@@ -35,10 +45,13 @@ exports.createRdv = (req, res) => {
   const rdv_date = req.body["date-rdv"];
   connection.query(
     "INSERT INTO rendezvous(user_id,rdv_date) VALUES (? ,?)",
-    [req.params.id, rdv_date],
+    [req.session.user_id, rdv_date],
     (err, rows) => {
       if (!err) {
-        res.redirect("/client");
+        res.render("client-add-rdv", {
+          alert: "Rendezvous ajouté avec succés",
+          user_id: req.session.user_id,
+        });
       } else {
         console.log(err);
       }
@@ -46,10 +59,11 @@ exports.createRdv = (req, res) => {
   );
 };
 
-exports.deleteRdv = (req, res) => {
+exports.cancelRdvClient = (req, res) => {
+  const rdv_id = parseInt(req.params.rdv_id);
   connection.query(
-    "DELETE FROM rendezvous WHERE rdv_id=?",
-    [req.params.rdv_id],
+    "DELETE FROM rendezvous WHERE user_id=? AND rdv_id=?",
+    [req.session.user_id, rdv_id],
     (err, rows) => {
       if (!err) {
         connection.query(
@@ -60,12 +74,41 @@ exports.deleteRdv = (req, res) => {
               res.render("client-view-rdv", {
                 rows,
                 alert: "Rendez-vous annulé",
+                loggedin: req.session.loggedin,
+                username: req.session.username,
               });
             } else {
               console.log(err);
             }
           }
         );
+      } else {
+        console.log(err);
+      }
+    }
+  );
+};
+
+exports.cancelRdvAdmin = (req, res) => {
+  const rdv_id = parseInt(req.params.rdv_id);
+  connection.query(
+    "DELETE FROM rendezvous WHERE rdv_id=?",
+    [rdv_id],
+    (err, rows) => {
+      if (!err) {
+        connection.query("SELECT * FROM rendezvous", (err, rows) => {
+          if (!err) {
+            res.render("admin-view-rdv", {
+              rows,
+              alert: "Rendez-vous annulé",
+              isAdmin: req.session.isAdmin,
+              loggedin: req.session.loggedin,
+              username: req.session.username,
+            });
+          } else {
+            console.log(err);
+          }
+        });
       } else {
         console.log(err);
       }

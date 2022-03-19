@@ -1,0 +1,44 @@
+<header id="header">
+    <div class="container">
+        <div id="logo" class="pull-left">
+            <h1><a href="/" id="body" class="scrollto"><span style="font-size: 80px;">C</span> <span>Rabii Absesi</span>
+                </a></h1>
+            <!-- <a href="#body"><img src="img/logo.png" alt="" title="" /></a>-->
+        </div>
+
+        <nav id="nav-menu-container">
+            <ul class="nav-menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">A propos</a></li>
+                <li><a href="/mission">Mission</a></li>
+                <li><a href="/articles">Articles</a></li>
+                <li class="menu-has-children"><a href="/projets">Nos Projets</a>
+                    <ul>
+                        <li><a href="#">Projet 1</a></li>
+                        <li><a href="#">Projet 2</a></li>
+                        <li><a href="#">Projet 3</a></li>
+                        <li><a href="#">Projet 4</a></li>
+                    </ul>
+                </li>
+                <li><a href="/contact">Contact</a></li>
+                {{#if loggedin}}
+                {{#if isAdmin}}
+                <li>
+                    <a href="/admin">{{username}}</a>
+                </li>
+                {{else}}
+                <li>
+                    <a href="/client/{{user_id}}">{{username}}</a>
+                </li>
+                {{/if}}
+
+                <li><a href="/logout">Se Déconnecter</a></li>
+                {{else}}
+
+                <li><a href="/login">Se Connecter</a></li>
+                <li><a href="/register">Créer un Compte</a></li>
+                {{/if}}
+            </ul>
+        </nav>
+    </div>
+</header>

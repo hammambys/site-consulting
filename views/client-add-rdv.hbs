@@ -1,10 +1,16 @@
 <section id="innerBanner"></section>
 <main id="main">
-    <div class="container dashboard">
+    <div class="container-sm dashboard">
         {{>client-sidebar}}
         <div class="container">
+            {{#if alert}}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{alert}}
+                <a href="/client/{{user_id}}/viewrdv" class="btn">Voir</a>
+            </div>
+            {{/if}}
             <h2>Prendre un rendez-vous</h2>
-            <form action="/client/1/addrdv" method="post">
+            <form action="/client/{{user_id}}/addrdv" method="post">
                 <label for="date-rdv">Date</label>
                 <input type="datetime-local" id="dateRdv" name="date-rdv" value="{{this.rdv_date}}">
                 <input type="submit">

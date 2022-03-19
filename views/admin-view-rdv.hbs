@@ -1,14 +1,30 @@
 <section id="innerBanner"></section>
 <main id="main">
-  <div class="container dashboard">
+  <div class="container-sm dashboard">
     {{>admin-sidebar}}
-
-    <div class="container ">
+    <div class="container">
       {{#if alert}}
       <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{alert}}
       </div>
       {{/if}}
+      {{#if isAdmin}}
+      <div class="d-flex flex-wrap">
+        {{#each rows}}
+        <div class="card" style="width: 18rem;background-color:var(--third)">
+          <div class="card-body">
+            <p>rdv_id :{{this.rdv_id}}</p>
+            <p>client_id :{{this.user_id}}</p>
+            <h5 class="card-title">Date : {{this.rdv_date}} </h5>
+            <p class="card-text">Détails de rendez-vous</p>
+            <form action="/admin/rdv/{{this.rdv_id}}">
+              <button type="submit" class="btn btn-primary">Annuler</button>
+            </form>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+      {{else}}
       <div class="d-flex flex-wrap">
         {{#each rows}}
         <div class="card" style="width: 18rem;background-color:var(--third)">
@@ -23,9 +39,8 @@
         </div>
         {{/each}}
       </div>
+      {{/if}}
 
     </div>
   </div>
-
-
 </main>

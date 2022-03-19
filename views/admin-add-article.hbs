@@ -2,19 +2,22 @@
 
 </section>
 <main id="main">
-  <div class="container dashboard">
+  <div class="container-sm dashboard">
     {{>admin-sidebar}}
-    <div class="main-admin-dashboard">
+    <div class="container">
       {{#if alert}}
       <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{alert}}
         <a href="/articles" class="btn">Voir les articles</a>
       </div>
       {{/if}}
-      <form class="row g-3 needs-validation" method="POST" action="/addarticle" novalidate>
-        {{> article-form}}
-      </form>
+      <div class="container">
+        <form class=" g-3 needs-validation" enctype="multipart/form-data" method="POST" action="/admin/addarticle"
+          novalidate>
+          {{> article-form}}
+        </form>
+      </div>
+
     </div>
   </div>
-
 </main>

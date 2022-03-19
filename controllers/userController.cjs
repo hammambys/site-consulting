@@ -10,7 +10,11 @@ let connection = mysql.createConnection({
 exports.viewAll = (req, res) => {
   connection.query("SELECT * FROM users", (err, rows) => {
     if (!err) {
-      res.render("admin-view-clients", { rows });
+      res.render("admin-view-clients", {
+        rows,
+        loggedin: req.session.loggedin,
+        username: req.session.username,
+      });
     } else {
       console.log(err);
     }
@@ -24,6 +28,8 @@ exports.viewClient = (req, res) => {
       if (!err) {
         res.render("view-client", {
           data: rows,
+          loggedin: req.session.loggedin,
+          username: req.session.username,
         });
       } else {
         console.log(err);
@@ -38,7 +44,11 @@ exports.editClient = (req, res) => {
     [req.params.id],
     (err, rows) => {
       if (!err) {
-        res.render("edit-client", { rows });
+        res.render("edit-client", {
+          rows,
+          loggedin: req.session.loggedin,
+          username: req.session.username,
+        });
       } else {
         console.log(err);
       }
@@ -61,6 +71,8 @@ exports.updateClient = (req, res) => {
               res.render("edit-client", {
                 rows,
                 alert: `${username} est mis à jour.`,
+                loggedin: req.session.loggedin,
+                username: req.session.username,
               });
             } else {
               console.log(err);
@@ -74,7 +86,7 @@ exports.updateClient = (req, res) => {
   );
 };
 
-exports.deleteClient = (req, res) => {
+exports.activateClient = (req, res) => {
   connection.query(
     "select isActive from users where user_id=?",
     [req.params.id],
@@ -91,6 +103,8 @@ exports.deleteClient = (req, res) => {
                     res.render("admin-view-clients", {
                       rows,
                       alert: "utilisateur activé avec succés",
+                      loggedin: req.session.loggedin,
+                      username: req.session.username,
                     });
                   } else {
                     console.log(err);
@@ -112,6 +126,8 @@ exports.deleteClient = (req, res) => {
                     res.render("admin-view-clients", {
                       rows,
                       alert: "utilisateur désactivé avec succés",
+                      loggedin: req.session.loggedin,
+                      username: req.session.username,
                     });
                   } else {
                     console.log(err);
@@ -128,7 +144,6 @@ exports.deleteClient = (req, res) => {
       }
     }
   );
-  const { isActive } = req.body;
 };
 
 exports.login = (req, res) => {
@@ -141,14 +156,22 @@ exports.login = (req, res) => {
     connection.query(
       "SELECT * FROM users WHERE email = ? AND password = ?",
       [email, password],
-      function (error, results, fields) {
-        if (error) throw error;
+      (err, rows) => {
+        if (err) throw err;
         // If the account exists
-        if (results.length > 0) {
+        if (rows.length > 0) {
+          req.session.user_id = rows[0].user_id;
+          req.session.username = rows[0].username;
+          req.session.first_name = rows[0].first_name;
+          req.session.isAdmin = rows[0].isAdmin;
           // Authenticate the user
           req.session.loggedin = true;
           req.session.email = email;
-          res.redirect("/clients");
+          if (!req.session.isAdmin) {
+            res.redirect("/client/" + req.session.user_id);
+          } else {
+            res.redirect("/admin");
+          }
         } else {
           res.send("Incorrect Username and/or Password!");
         }
@@ -170,7 +193,7 @@ exports.register = (req, res) => {
     password: req.body.password,
   };
 
-  connection.query("INSERT INTO users SET ?", user, function (err, result) {
+  connection.query("INSERT INTO users SET ?", user, function (err, rows) {
     if (err) {
       console.log(err);
       res.render("register", {
@@ -178,6 +201,8 @@ exports.register = (req, res) => {
         name: "",
         password: "",
         email: "",
+        loggedin: req.session.loggedin,
+        username: req.session.username,
       });
     } else {
       console.log("success", "You have successfully signup!");
