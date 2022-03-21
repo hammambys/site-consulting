@@ -10,13 +10,12 @@
             {{/if}}
             <div class="d-flex flex-wrap">
                 {{#each rows}}
-                <div class="card" style="width: 18rem;background-color:var(--third)">
+                <div class="card p-2 mr-3" style="width: 18rem;background-color:var(--third)">
                     <div class="card-body">
-                        <p>{{this.rdv_id}}</p>
                         <h5 class="card-title">Date : {{this.rdv_date}} </h5>
-                        <p class="card-text">Détails de rendez-vous</p>
+                        <h5 class="card-title">Heure : {{this.rdv_heure}} </h5>
                         <form action="/client/{{user_id}}/{{this.rdv_id}}">
-                            <button type="submit" class="btn btn-primary">Annuler</button>
+                            <button type="submit" class="btn btn-danger">Annuler</button>
                         </form>
                     </div>
                 </div>

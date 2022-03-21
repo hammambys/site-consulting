@@ -8,38 +8,31 @@
         {{alert}}
       </div>
       {{/if}}
-      {{#if isAdmin}}
+
       <div class="d-flex flex-wrap">
         {{#each rows}}
-        <div class="card" style="width: 18rem;background-color:var(--third)">
-          <div class="card-body">
+        <div class="card  mr-3" style="width: 18rem;background-color:var(--third)">
+          <div class="card-header d-flex justify-content-between">
             <p>rdv_id :{{this.rdv_id}}</p>
             <p>client_id :{{this.user_id}}</p>
-            <h5 class="card-title">Date : {{this.rdv_date}} </h5>
-            <p class="card-text">Détails de rendez-vous</p>
-            <form action="/admin/rdv/{{this.rdv_id}}">
-              <button type="submit" class="btn btn-primary">Annuler</button>
-            </form>
           </div>
-        </div>
-        {{/each}}
-      </div>
-      {{else}}
-      <div class="d-flex flex-wrap">
-        {{#each rows}}
-        <div class="card" style="width: 18rem;background-color:var(--third)">
           <div class="card-body">
-            <p>{{this.rdv_id}}</p>
+            <h5 class="card-title">Prénom : {{this.first_name}} </h5>
+            <h5 class="card-title">Nom : {{this.last_name}} </h5>
             <h5 class="card-title">Date : {{this.rdv_date}} </h5>
-            <p class="card-text">Détails de rendez-vous</p>
-            <form action="/client/1/{{this.rdv_id}}">
-              <button type="submit" class="btn btn-primary">Annuler</button>
-            </form>
+            <h5 class="card-title">Heure : {{this.rdv_heure}} </h5>
+            <div class="card-footer text-center ">
+              <form action="/admin/rdv/{{this.rdv_id}}">
+                <button type="submit" class="btn btn-danger">Annuler</button>
+              </form>
+            </div>
+
           </div>
         </div>
         {{/each}}
       </div>
-      {{/if}}
+
+
 
     </div>
   </div>

@@ -7,27 +7,40 @@ let connection = mysql.createConnection({
   database: process.env.DB_NAME,
 });
 
+function formatdate(item) {
+  var newDate = new Date(item.rdv_date).toLocaleDateString("fr");
+  var newTime = item.rdv_date.toLocaleTimeString("fr");
+  item.rdv_date = newDate;
+  item.rdv_heure = newTime.slice(0, -3);
+}
+
 exports.viewAllRdv = (req, res) => {
   // User the connection
-  connection.query("SELECT * FROM rendezvous", (err, rows) => {
-    if (!err) {
-      res.render("admin-view-rdv", {
-        rows,
-        isAdmin: req.session.isAdmin,
-        loggedin: req.session.loggedin,
-        username: req.session.username,
-      });
-    } else {
-      console.log(err);
+  connection.query(
+    "SELECT * FROM rendezvous r, users u WHERE r.user_id=u.user_id",
+    (err, rows) => {
+      if (!err) {
+        rows.map(formatdate);
+        res.render("admin-view-rdv", {
+          rows,
+          isAdmin: req.session.isAdmin,
+          loggedin: req.session.loggedin,
+          username: req.session.username,
+        });
+      } else {
+        console.log(err);
+      }
     }
-  });
+  );
 };
+
 exports.viewAllRdvOfClient = (req, res) => {
   connection.query(
     "SELECT * FROM rendezvous WHERE user_id=?",
     [req.session.user_id],
     (err, rows) => {
       if (!err) {
+        rows.map(formatdate);
         res.render("client-view-rdv", {
           rows,
           user_id: req.session.user_id,
@@ -48,9 +61,15 @@ exports.createRdv = (req, res) => {
     [req.session.user_id, rdv_date],
     (err, rows) => {
       if (!err) {
-        res.render("client-add-rdv", {
-          alert: "Rendezvous ajouté avec succés",
-          user_id: req.session.user_id,
+        connection.query("SELECT * FROM rendezvous", (err, rows) => {
+          if (!err) {
+            res.render("client-add-rdv", {
+              alert: "Rendezvous ajouté avec succés",
+              user_id: req.session.user_id,
+            });
+          } else {
+            console.log(err);
+          }
         });
       } else {
         console.log(err);
@@ -71,6 +90,7 @@ exports.cancelRdvClient = (req, res) => {
           [req.params.id],
           (err, rows) => {
             if (!err) {
+              rows.map(formatdate);
               res.render("client-view-rdv", {
                 rows,
                 alert: "Rendez-vous annulé",
@@ -98,6 +118,7 @@ exports.cancelRdvAdmin = (req, res) => {
       if (!err) {
         connection.query("SELECT * FROM rendezvous", (err, rows) => {
           if (!err) {
+            rows.map(formatdate);
             res.render("admin-view-rdv", {
               rows,
               alert: "Rendez-vous annulé",

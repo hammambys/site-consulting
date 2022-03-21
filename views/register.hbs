@@ -1,31 +1,37 @@
 <div class="form register">
 	<h1>Créer un Compte</h1>
+	<div class="container d-flex p-3 justify-content-around">
+		<p>Déja inscrit ? Cliquez ici</p>
+		<a style="color: rgb(182, 206, 206);" href="/login">Se Connecter </a>
+	</div>
 	<form action="/post-register" method="post">
-		<label for="fname">
-			<i class="fas fa-user"></i>
-		</label>
-		<input type="text" name="fname" placeholder="Prénom" id="fname" required>
-		<label for="lname">
-			<i class="fas fa-user"></i>
-		</label>
-		<input type="text" name="lname" placeholder="Nom" id="lname" required>
-		<label for="username">
-			<i class="fas fa-user"></i>
-		</label>
-		<input type="text" name="username" placeholder="Username" id="username" required>
-		<label for="email">
-			<i class="fas fa-user"></i>
-		</label>
-		<input type="text" name="email" placeholder="Email" id="email" required>
-		<label for="password">
-			<i class="fas fa-lock"></i>
-		</label>
-		<input type="password" name="password" placeholder="Mot de Passe" id="password" required>
+		<div class="field">
+			<label for="fname">
+				Prénom </label>
+			<input type="text" name="fname" placeholder="Prénom" id="fname" required>
+		</div>
+		<div class="field">
+			<label for="lname">
+				Nom </label>
+			<input type="text" name="lname" placeholder="Nom" id="lname" required>
+		</div>
+		<div class="field">
+			<label for="username">
+				Username </label>
+			<input type="text" name="username" placeholder="Username" id="username" required>
+		</div>
+		<div class="field">
+			<label for="email">
+				Email </label>
+			<input type="text" name="email" placeholder="Email" id="email" required>
+		</div>
+		<div class="field">
+			<label for="password">
+				Mot de passe </label>
+			<input type="password" name="password" placeholder="Mot de Passe" id="password" required>
+		</div>
 		<input type="submit" value="Valider">
 	</form>
-	<div class="container d-flex p-3 justify-content-around">
-		<p>Déja inscrit? Clickez ici</p>
-		<a style="color: aqua;" href="/login">Se Connecter </a>
-	</div>
+
 
 </div>
