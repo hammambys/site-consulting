@@ -16,7 +16,6 @@ exports.viewArticle = (req, res) => {
         const article_title = rows[0].article_title;
         const article_content = rows[0].article_content;
         const img_src = rows[0].img_src;
-        console.log(img_src);
         res.render("article", {
           rows,
           isAdmin: req.session.isAdmin,
@@ -66,7 +65,6 @@ exports.createArticle = (req, res) => {
   if (!req.file) {
     console.log("No file upload");
   }
-  console.log(req.file);
   var img_src = "img/article-img/" + req.file.filename;
   const { article_title, article_content } = req.body;
   connection.query(
