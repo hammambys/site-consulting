@@ -8,7 +8,7 @@
   },
   "type": "module",
   "scripts": {
-    "start": "nodemon ./server.js -e cjs,js,json",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
