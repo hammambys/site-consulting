@@ -20,6 +20,9 @@ body {
   color: #fff;
   font-family: "Open Sans", sans-serif;
 }
+img {
+  max-width: 100%;
+}
 
 a {
   color: var(--primary);
@@ -202,7 +205,6 @@ h6 {
 #hero {
   width: 100%;
   position: relative;
-  background-size: cover;
   padding: 200px 0 120px 0;
   top: 0px;
 }
@@ -237,6 +239,12 @@ h6 {
 }
 
 @media (max-width: 767px) {
+  #hero img {
+    display: none;
+  }
+  #hero .hero-content {
+    position: unset;
+  }
   #hero .hero-content h2 {
     font-size: 22px;
     background: var(--secondary) fff00;
